@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Flor ❤️</title>
+    <!-- Fuentes y Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/framer-motion@11.11.11/dist/framer-motion.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #FAF9F6; color: #1A1A1A; scroll-behavior: smooth; }
+        .serif { font-family: 'Playfair Display', serif; }
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .floating { animation: float 3s ease-in-out infinite; }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Hero Section -->
+    <section class="h-screen flex flex-col items-center justify-center text-center px-6 relative">
+        <div class="z-10">
+            <span class="text-[10px] uppercase tracking-[0.6em] text-[#8C7851] block mb-6">Cinco Meses de Nosotros</span>
+            <h1 class="text-7xl md:text-9xl serif italic leading-none mb-4">Flor & Yo</h1>
+            <p class="text-sm font-mono tracking-[0.3em] opacity-40 mt-8 uppercase">Desde el 30.03.2025</p>
+        </div>
+        <div class="absolute bottom-10 w-px h-20 bg-[#1A1A1A] opacity-20"></div>
+    </section>
+
+    <!-- Galería Dinámica -->
+    <section class="py-24 bg-[#1A1A1A] text-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-4xl serif italic mb-12">Nuestros Momentos</h2>
+            <div class="relative aspect-[4/5] md:aspect-video rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+                <img id="gallery-img" src="img/foto1.jpg" onerror="this.src='https://picsum.photos/seed/love1/1200/800'" class="w-full h-full object-cover transition-opacity duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                    <p class="serif italic text-2xl">Nuestra Magia</p>
+                    <p id="photo-counter" class="text-xs opacity-50">1 / 30</p>
+                </div>
+            </div>
+            <div class="flex justify-center gap-6 mt-8">
+                <button onclick="changePhoto(-1)" class="p-4 rounded-full bg-white/10 hover:bg-white/20 transition">←</button>
+                <button onclick="changePhoto(1)" class="p-4 rounded-full bg-white/10 hover:bg-white/20 transition">→</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video y Carta -->
+    <section class="py-24 px-6 max-w-3xl mx-auto text-center">
+        <h2 class="text-4xl serif italic mb-12">Un Regalo para Vos</h2>
+        <div class="aspect-[9/16] max-w-[300px] mx-auto rounded-[3rem] overflow-hidden shadow-2xl border-[10px] border-white bg-black mb-16">
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/tbB49CwxorM" frameborder="0" allowfullscreen></iframe>
+        </div>
+        
+        <div class="text-left space-y-10 text-xl leading-relaxed font-light">
+            <h3 class="text-5xl serif italic">Feliz año nuevo, amor ❤️</h3>
+            <p>Desde el 30 de marzo vivimos de todo un poco: momentos re lindos, discusiones, aprendizajes… y aun así seguimos acá, eligiéndonos.</p>
+            <div class="p-10 bg-[#1A1A1A] text-white rounded-[3rem] serif italic text-2xl shadow-xl">
+                "No somos perfectos y a veces nos cuesta, pero sé que nos amamos y que cuando hay amor siempre hay ganas de intentar y de mejorar."
+            </div>
+            <p>Gracias por todo lo que sos. Te amo y espero que este año nos encuentre más unidos y felices juntos.</p>
+            <div class="text-center pt-10">
+                <span class="text-6xl">❤️</span>
+                <p class="serif italic text-4xl mt-4">Por siempre, Flor.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pregunta Divertida -->
+    <section class="py-24 bg-[#F5F2ED] text-center">
+        <h2 class="text-3xl serif italic mb-12">¿Me amás un poquito?</h2>
+        <div class="flex justify-center items-center gap-8 h-32 relative max-w-xs mx-auto">
+            <button onclick="celebrate()" class="px-10 py-4 bg-[#1A1A1A] text-white rounded-full font-bold shadow-xl z-20">SÍ</button>
+            <button id="no-btn" onmouseover="moveNo()" onclick="moveNo()" class="px-10 py-4 border-2 border-[#1A1A1A] rounded-full font-bold transition-all duration-200 z-10">NO</button>
+        </div>
+    </section>
+
+    <footer class="py-12 text-center opacity-30 text-[10px] tracking-[0.5em] uppercase">
+        5 Meses • Infinitos Recuerdos
+    </footer>
+
+    <script>
+        let current = 1;
+        const total = 30;
+
+        function changePhoto(dir) {
+            current += dir;
+            if (current > total) current = 1;
+            if (current < 1) current = total;
+            const img = document.getElementById('gallery-img');
+            img.style.opacity = 0;
+            setTimeout(() => {
+                img.src = `img/foto${current}.jpg`;
+                document.getElementById('photo-counter').innerText = `${current} / ${total}`;
+                img.style.opacity = 1;
+            }, 200);
+        }
+
+        function moveNo() {
+            const btn = document.getElementById('no-btn');
+            const x = Math.random() * 200 - 100;
+            const y = Math.random() * 150 - 75;
+            btn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        function celebrate() {
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 } });
+            alert("¡Yo también te amo muchísimo! ❤️");
+        }
+    </script>
+</body>
+</html>
