@@ -3,202 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para mi Hermosa Flor ❤️</title>
+    <title>Flor & Toti - 5 Meses ❤️</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/framer-motion@11.11.11/dist/framer-motion.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-    
     <style>
-        :root { --gold: #8C7851; --cream: #FAF9F6; --dark: #1A1A1A; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: var(--dark); scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: #fffafb; color: #1a1a1a; scroll-behavior: smooth; }
         .serif { font-family: 'Playfair Display', serif; }
         .cursive { font-family: 'Dancing Script', cursive; }
-        .photo-frame { aspect-ratio: 4/5; width: 100%; object-fit: cover; border-radius: 1.5rem; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
-        @keyframes heart-float { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-100px) scale(1.5); opacity: 0; } }
-        .heart-particle { position: absolute; pointer-events: none; animation: heart-float 1s ease-out forwards; color: #ff4d4d; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .photo-frame { aspect-ratio: 1/1; object-fit: cover; width: 100%; height: 100%; border-radius: 24px; }
+        .floating-heart { position: fixed; pointer-events: none; z-index: 100; animation: floatUp 4s linear forwards; }
+        @keyframes floatUp { from { transform: translateY(100vh) rotate(0deg); opacity: 1; } to { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
+        .music-btn { position: fixed; bottom: 25px; left: 25px; z-index: 1000; transition: all 0.3s; }
+        .envelope { transition: all 0.5s; cursor: pointer; }
+        .envelope:active { transform: scale(0.9); }
     </style>
 </head>
-<body class="overflow-x-hidden" onclick="createHeart(event)">
+<body class="overflow-x-hidden">
+
+    <!-- Música de Fondo -->
+    <div id="player" style="display:none"></div>
+    <button onclick="toggleMusic()" class="music-btn w-14 h-14 bg-white/80 backdrop-blur-md rounded-full shadow-2xl flex items-center justify-center border-2 border-[#ffafbd]">
+        <span id="music-icon" class="text-2xl">🎵</span>
+    </button>
 
     <!-- Hero Section -->
-    <section class="min-h-screen flex flex-col items-center justify-center text-center px-6 relative bg-[#1A1A1A] text-white">
-        <div class="absolute inset-0 opacity-30 bg-[url('https://www.transparenttextures.com/patterns/paper.png')]"></div>
+    <section class="h-screen flex flex-col items-center justify-center text-center px-6 relative bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#fff5f6] to-[#ffafbd]">
         <div class="z-10">
-            <p class="text-[10px] uppercase tracking-[0.8em] text-[#8C7851] mb-8 opacity-80">Cinco Meses de Puro Amor</p>
-            <h1 class="text-7xl md:text-9xl serif italic leading-none mb-6">Flor <span class="text-3xl md:text-5xl not-italic font-light">&</span> Yo</h1>
-            <p class="cursive text-3xl md:text-5xl text-[#8C7851] mt-4">Hermosa mi amor, mi vida...</p>
+            <h2 class="text-[#8C7851] uppercase tracking-[0.5em] text-[10px] mb-6 font-bold">Nuestra Historia</h2>
+            <h1 class="text-8xl md:text-9xl serif italic leading-none mb-4">Flor & Yo</h1>
+            <div class="h-px w-20 bg-[#ff4d6d] mx-auto my-8"></div>
+            <p class="cursive text-5xl text-[#ff4d6d]">5 Meses de Magia</p>
         </div>
-        <div class="absolute bottom-10 animate-bounce opacity-30">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-        </div>
+        <div class="absolute bottom-10 animate-bounce text-2xl opacity-20">↓</div>
     </section>
 
-    <!-- Línea de Tiempo -->
-    <section class="py-24 px-6 max-w-4xl mx-auto">
-        <div class="text-center mb-20">
-            <h2 class="text-4xl serif italic mb-4">Nuestra Historia</h2>
-            <div class="w-12 h-px bg-[#8C7851] mx-auto opacity-50"></div>
-        </div>
-        
-        <div class="space-y-16 relative">
-            <div class="absolute left-1/2 top-0 bottom-0 w-px bg-[#8C7851] opacity-20 -translate-x-1/2"></div>
-            
-            <!-- Hito 1 -->
-            <div class="relative flex items-center justify-between md:justify-center gap-8">
-                <div class="w-1/2 hidden md:block text-right pr-12">
-                    <p class="text-xs font-mono text-[#8C7851]">30 DE MARZO, 2025</p>
-                    <h3 class="serif italic text-2xl">Donde todo empezó</h3>
-                </div>
-                <div class="w-4 h-4 rounded-full bg-[#8C7851] z-10 shadow-[0_0_15px_rgba(140,120,81,0.5)]"></div>
-                <div class="flex-1 md:w-1/2 pl-4 md:pl-12">
-                    <p class="md:hidden text-[10px] font-mono text-[#8C7851]">30 DE MARZO</p>
-                    <p class="text-sm font-light opacity-70">El primer "Hola". Una charla que parecía casual pero que iba a cambiarlo todo para siempre.</p>
-                </div>
+    <!-- Contador de Tiempo Real -->
+    <section class="py-20 px-6 text-center bg-white reveal">
+        <h2 class="serif italic text-3xl mb-10">Tiempo siendo Novios</h2>
+        <div class="grid grid-cols-4 gap-2 max-w-sm mx-auto">
+            <div class="bg-[#fff5f6] p-4 rounded-2xl">
+                <span id="days" class="block text-2xl font-bold text-[#ff4d6d]">0</span>
+                <span class="text-[10px] uppercase opacity-40">Días</span>
             </div>
-
-            <!-- Hito 2 -->
-            <div class="relative flex items-center justify-between md:justify-center gap-8">
-                <div class="flex-1 md:w-1/2 text-right pr-4 md:pr-12">
-                    <p class="md:hidden text-[10px] font-mono text-[#8C7851]">20 DE SEPTIEMBRE</p>
-                    <p class="text-sm font-light opacity-70">El día que nos pusimos de novios. Cuando decidimos que queríamos caminar juntos de la mano.</p>
-                </div>
-                <div class="w-4 h-4 rounded-full bg-[#8C7851] z-10 shadow-[0_0_15px_rgba(140,120,81,0.5)]"></div>
-                <div class="w-1/2 hidden md:block pl-12">
-                    <p class="text-xs font-mono text-[#8C7851]">20 DE SEPTIEMBRE, 2025</p>
-                    <h3 class="serif italic text-2xl">Nuestro "Sí" oficial</h3>
-                </div>
+            <div class="bg-[#fff5f6] p-4 rounded-2xl">
+                <span id="hours" class="block text-2xl font-bold text-[#ff4d6d]">0</span>
+                <span class="text-[10px] uppercase opacity-40">Hrs</span>
             </div>
-
-            <!-- Hito 3 -->
-            <div class="relative flex items-center justify-between md:justify-center gap-8">
-                <div class="w-1/2 hidden md:block text-right pr-12">
-                    <p class="text-xs font-mono text-[#8C7851]">20 DE FEBRERO, 2026</p>
-                    <h3 class="serif italic text-2xl">Hoy</h3>
-                </div>
-                <div class="w-4 h-4 rounded-full bg-[#8C7851] z-10 shadow-[0_0_15px_rgba(140,120,81,0.5)]"></div>
-                <div class="flex-1 md:w-1/2 pl-4 md:pl-12">
-                    <p class="md:hidden text-[10px] font-mono text-[#8C7851]">HOY</p>
-                    <p class="text-sm font-light opacity-70">5 meses de novios. Seguimos acá, más unidos que nunca y con ganas de todo.</p>
-                </div>
+            <div class="bg-[#fff5f6] p-4 rounded-2xl">
+                <span id="mins" class="block text-2xl font-bold text-[#ff4d6d]">0</span>
+                <span class="text-[10px] uppercase opacity-40">Min</span>
+            </div>
+            <div class="bg-[#fff5f6] p-4 rounded-2xl">
+                <span id="secs" class="block text-2xl font-bold text-[#ff4d6d]">0</span>
+                <span class="text-[10px] uppercase opacity-40">Seg</span>
             </div>
         </div>
+        <p class="mt-8 cursive text-2xl text-[#8C7851]">Y contando cada segundo a tu lado...</p>
     </section>
 
-    <!-- Galería con Tamaño Fijo -->
-    <section class="py-24 bg-[#1A1A1A] text-white">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-4xl serif italic mb-4">Recuerdos</h2>
-            <p class="text-xs tracking-widest opacity-40 mb-12 uppercase">Nuestros momentos favoritos</p>
-            
-            <div class="relative max-w-md mx-auto group">
-                <div class="photo-frame overflow-hidden shadow-2xl border border-white/10 bg-neutral-900">
-                    <img id="gallery-img" src="" class="w-full h-full object-cover transition-opacity duration-500 opacity-0">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                    <div class="absolute bottom-8 left-8 right-8 text-left">
-                        <p class="serif italic text-2xl">Nuestra Magia</p>
-                        <p id="photo-counter" class="text-[10px] font-mono opacity-40 mt-2">1 / 30</p>
+    <!-- Galería Premium -->
+    <section class="py-24 bg-[#1a1a1a] text-white overflow-hidden">
+        <div class="max-w-md mx-auto px-6 text-center">
+            <h2 class="serif italic text-4xl mb-12 reveal">Nuestros Recuerdos</h2>
+            <div class="relative rounded-[40px] overflow-hidden shadow-[0_0_60px_rgba(255,175,189,0.2)] border-8 border-white/5 reveal">
+                <img id="gallery-img" src="" class="photo-frame transition-all duration-700 opacity-0 scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
+                <div class="absolute bottom-8 left-8 right-8 text-left flex justify-between items-end">
+                    <div>
+                        <p class="cursive text-3xl text-[#ffafbd] mb-1">Hermosa mi amor...</p>
+                        <p class="serif italic text-xl">Foto #<span id="photo-num">1</span></p>
                     </div>
+                    <div class="text-[10px] font-mono opacity-40 tracking-widest">2025-2026</div>
                 </div>
-                
-                <!-- Controles -->
-                <button onclick="changePhoto(-1)" class="absolute -left-6 top-1/2 -translate-y-1/2 w-12 h-12 glass rounded-full flex items-center justify-center hover:bg-white/10 transition">←</button>
-                <button onclick="changePhoto(1)" class="absolute -right-6 top-1/2 -translate-y-1/2 w-12 h-12 glass rounded-full flex items-center justify-center hover:bg-white/10 transition">→</button>
+            </div>
+            <div class="flex justify-center gap-10 mt-12 reveal">
+                <button onclick="changePhoto(-1)" class="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-3xl active:scale-90 transition shadow-xl">←</button>
+                <button onclick="changePhoto(1)" class="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-3xl active:scale-90 transition shadow-xl">→</button>
             </div>
         </div>
     </section>
 
-    <!-- Frase Destacada -->
-    <section class="py-32 px-6 text-center bg-[#F5F2ED]">
-        <div class="max-w-2xl mx-auto">
-            <span class="text-4xl">🌴</span>
-            <h2 class="serif italic text-3xl md:text-5xl leading-tight mt-8">
-                "Te amo de aquí hasta la palmera y después al cielo, ida y vuelta."
-            </h2>
-            <p class="cursive text-2xl text-[#8C7851] mt-6">— Tu novio</p>
+    <!-- Sobres de Amor (Interactivo) -->
+    <section class="py-24 px-6 bg-[#fff5f6] text-center">
+        <h2 class="serif italic text-3xl mb-4 reveal">Toca un sobre</h2>
+        <p class="text-xs opacity-40 uppercase tracking-widest mb-12 reveal">Tengo algo que decirte</p>
+        <div class="flex justify-center gap-4 max-w-sm mx-auto reveal">
+            <div onclick="openEnvelope(1, 'Sos lo más lindo que me pasó en la vida, mi vida.')" class="envelope flex-1 bg-white p-6 rounded-3xl shadow-lg border-b-4 border-[#ffafbd]">
+                <span class="text-4xl">✉️</span>
+            </div>
+            <div onclick="openEnvelope(2, 'Te amo de aquí hasta la palmera y al cielo ida y vuelta.')" class="envelope flex-1 bg-white p-6 rounded-3xl shadow-lg border-b-4 border-[#ffafbd]">
+                <span class="text-4xl">✉️</span>
+            </div>
+            <div onclick="openEnvelope(3, 'Gracias por elegirme cada día estos 5 meses.')" class="envelope flex-1 bg-white p-6 rounded-3xl shadow-lg border-b-4 border-[#ffafbd]">
+                <span class="text-4xl">✉️</span>
+            </div>
+        </div>
+        <div id="envelope-msg" class="mt-12 cursive text-3xl text-[#ff4d6d] min-h-[60px] px-6"></div>
+    </section>
+
+    <!-- Bento Grid: Nuestros Sueños -->
+    <section class="py-24 px-6 max-w-md mx-auto">
+        <h2 class="serif italic text-3xl text-center mb-12 reveal">Nuestros Próximos Pasos</h2>
+        <div class="grid grid-cols-2 gap-4 reveal">
+            <div class="bg-white p-6 rounded-[32px] shadow-sm border border-[#ffafbd]/20 flex flex-col items-center text-center">
+                <span class="text-3xl mb-4">✈️</span>
+                <p class="text-xs font-bold uppercase tracking-widest">Viajes</p>
+            </div>
+            <div class="bg-[#1a1a1a] p-6 rounded-[32px] shadow-sm text-white flex flex-col items-center text-center">
+                <span class="text-3xl mb-4">🍕</span>
+                <p class="text-xs font-bold uppercase tracking-widest">Cenas</p>
+            </div>
+            <div class="col-span-2 bg-[#ffafbd]/20 p-8 rounded-[32px] border-2 border-dashed border-[#ffafbd] text-center">
+                <span class="text-4xl mb-4 block">🏡</span>
+                <p class="serif italic text-xl">Construir nuestro futuro juntos</p>
+            </div>
         </div>
     </section>
 
-    <!-- Video -->
-    <section class="py-24 px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl serif italic mb-12">Un Regalo Visual</h2>
-            <div class="aspect-[9/16] max-w-[320px] mx-auto rounded-[2.5rem] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.2)] border-[12px] border-white bg-black">
-                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/tbB49CwxorM" frameborder="0" allowfullscreen></iframe>
+    <!-- Video Especial -->
+    <section class="py-24 bg-white reveal">
+        <div class="max-w-sm mx-auto px-6">
+            <div class="aspect-[9/16] rounded-[50px] overflow-hidden shadow-[0_40px_80px_rgba(255,175,189,0.4)] border-[15px] border-white bg-black">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/tbB49CwxorM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
-        </div>
-    </section>
-
-    <!-- La Carta -->
-    <section class="py-32 px-6 max-w-2xl mx-auto">
-        <div class="space-y-8 text-lg leading-relaxed font-light">
-            <h3 class="text-5xl serif italic mb-12">Felices 5 meses, mi amor ❤️</h3>
-            <p>Desde que nos comenzamos a hablar el 30 de marzo vivimos de todo un poco: momentos re lindos, discusiones, arreglos, aprendizajes… y aun así seguimos acá, eligiéndonos cada día.</p>
-            <p>No somos perfectos y a veces nos cuesta, pero sé que nos amamos y que cuando hay amor siempre hay ganas de intentar y de mejorar.</p>
-            <div class="p-10 bg-[#1A1A1A] text-white rounded-[3rem] serif italic text-2xl shadow-xl relative overflow-hidden">
-                "Ojalá este año podamos acomodar esas cositas que nos traban, con más paciencia, más charla y menos enojo."
-                <div class="absolute -bottom-4 -right-4 text-6xl opacity-10">❤️</div>
-            </div>
-            <p>Gracias por todo lo que sos y por lo que compartimos. Te amo y espero que estos 5 meses sean solo el comienzo de muchísimos más.</p>
-            <div class="text-center pt-16">
-                <p class="cursive text-4xl text-[#8C7851]">Por siempre juntos,</p>
-                <p class="serif italic text-5xl mt-2">Tu amor.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Medidor de Amor Interactivo -->
-    <section class="py-24 bg-[#F5F2ED] text-center px-6">
-        <h2 class="serif italic text-3xl mb-12">¿Cuánto te amo hoy?</h2>
-        <div class="max-w-sm mx-auto space-y-8">
-            <div class="h-2 bg-white rounded-full overflow-hidden">
-                <div id="love-bar" class="h-full bg-[#8C7851] transition-all duration-500" style="width: 0%"></div>
-            </div>
-            <button onclick="boostLove()" class="px-10 py-4 bg-[#1A1A1A] text-white rounded-full font-bold shadow-xl active:scale-95 transition">Subir Amor ❤️</button>
-            <p id="love-status" class="text-xs font-mono opacity-40 uppercase tracking-widest">Toca para aumentar</p>
+            <p class="text-center mt-10 cursive text-3xl text-[#8C7851]">Nuestra canción...</p>
         </div>
     </section>
 
     <!-- Pregunta Final -->
-    <section class="py-24 text-center px-6">
-        <h2 class="text-3xl serif italic mb-12">¿Me amás un poquito?</h2>
+    <section class="py-32 text-center bg-white reveal">
+        <h2 class="serif italic text-4xl mb-12">¿Me amás un poquito?</h2>
         <div class="flex justify-center items-center gap-8 h-32 relative max-w-xs mx-auto">
-            <button onclick="celebrate()" class="px-10 py-4 bg-[#1A1A1A] text-white rounded-full font-bold shadow-xl z-20">SÍ</button>
-            <button id="no-btn" onmouseover="moveNo()" onclick="moveNo()" class="px-10 py-4 border-2 border-[#1A1A1A] rounded-full font-bold transition-all duration-200 z-10">NO</button>
+            <button onclick="celebrate()" class="px-14 py-6 bg-[#ff4d6d] text-white rounded-full font-bold shadow-2xl active:scale-90 transition z-20">SÍ</button>
+            <button id="no-btn" onmouseover="moveNo()" onclick="moveNo()" class="px-14 py-6 border-2 border-[#ff4d6d] text-[#ff4d6d] rounded-full font-bold transition-all duration-200 z-10">NO</button>
         </div>
+        <button onclick="spawnHearts(50)" class="mt-20 text-[#ff4d6d] text-xs uppercase tracking-[0.4em] font-bold">Toca para un abrazo virtual</button>
     </section>
 
-    <footer class="py-20 text-center opacity-20 text-[10px] tracking-[1em] uppercase">
-        20.09.2025 • 20.02.2026
+    <footer class="py-20 text-center opacity-20 text-[10px] tracking-[0.6em] uppercase">
+        Flor & Yo • Amor Eterno
     </footer>
 
     <script>
+        // --- Lógica del Contador ---
+        const startDate = new Date('2024-09-20T00:00:00'); // Ajusta el año si es necesario
+        function updateCounter() {
+            const now = new Date();
+            const diff = now - startDate;
+            document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('hours').innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            document.getElementById('mins').innerText = Math.floor((diff / 1000 / 60) % 60);
+            document.getElementById('secs').innerText = Math.floor((diff / 1000) % 60);
+        }
+        setInterval(updateCounter, 1000);
+
+        // --- Música ---
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0', width: '0', videoId: 'tbB49CwxorM',
+                playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': 'tbB49CwxorM' }
+            });
+        }
+        let isPlaying = false;
+        function toggleMusic() {
+            const icon = document.getElementById('music-icon');
+            if(!isPlaying) { player.playVideo(); icon.innerText = "⏸️"; }
+            else { player.pauseVideo(); icon.innerText = "🎵"; }
+            isPlaying = !isPlaying;
+        }
+
+        // --- Galería ---
         let current = 1;
         const total = 30;
         const extensions = ['jpeg', 'jpg', 'png', 'JPEG', 'JPG', 'PNG'];
-        let loveLevel = 0;
-
         function loadPhoto(num) {
             const img = document.getElementById('gallery-img');
             let extIndex = 0;
-
             function tryNext() {
                 if (extIndex >= extensions.length) {
-                    img.src = `https://picsum.photos/seed/love${num}/800/1000`;
-                    img.style.opacity = 1;
+                    img.src = `https://picsum.photos/seed/love${num}/800/800`;
+                    img.style.opacity = 1; img.style.transform = "scale(1)";
                     return;
                 }
-                const testUrl = `img/foto${num}.${extensions[extIndex]}`;
+                const url = `img/foto${num}.${extensions[extIndex]}`;
                 const tester = new Image();
-                tester.onload = () => { img.src = testUrl; img.style.opacity = 1; document.getElementById('photo-counter').innerText = `${num} / ${total}`; };
+                tester.onload = () => { 
+                    img.src = url; img.style.opacity = 1; img.style.transform = "scale(1)";
+                    document.getElementById('photo-num').innerText = num;
+                };
                 tester.onerror = () => { extIndex++; tryNext(); };
-                tester.src = testUrl;
+                tester.src = url;
             }
-            img.style.opacity = 0;
-            setTimeout(tryNext, 200);
+            img.style.opacity = 0; img.style.transform = "scale(1.1)";
+            setTimeout(tryNext, 300);
         }
-
         function changePhoto(dir) {
             current += dir;
             if (current > total) current = 1;
@@ -206,38 +212,49 @@
             loadPhoto(current);
         }
 
-        function boostLove() {
-            loveLevel = Math.min(loveLevel + 20, 100);
-            document.getElementById('love-bar').style.width = loveLevel + '%';
-            if (loveLevel === 100) {
-                confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 } });
-                document.getElementById('love-status').innerText = "¡AMOR INFINITO ALCANZADO!";
-            }
-        }
-
-        function createHeart(e) {
-            const heart = document.createElement('div');
-            heart.innerHTML = '❤️';
-            heart.className = 'heart-particle';
-            heart.style.left = e.pageX + 'px';
-            heart.style.top = e.pageY + 'px';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 1000);
+        // --- Interacciones ---
+        function openEnvelope(num, msg) {
+            const display = document.getElementById('envelope-msg');
+            display.style.opacity = 0;
+            setTimeout(() => {
+                display.innerText = msg;
+                display.style.opacity = 1;
+                spawnHearts(10);
+            }, 300);
         }
 
         function moveNo() {
             const btn = document.getElementById('no-btn');
-            const x = Math.random() * 200 - 100;
-            const y = Math.random() * 150 - 75;
-            btn.style.transform = `translate(${x}px, ${y}px)`;
+            btn.style.transform = `translate(${Math.random()*200-100}px, ${Math.random()*160-80}px)`;
         }
 
         function celebrate() {
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 } });
-            alert("¡Yo también te amo de aquí hasta la palmera mi vida! ❤️");
+            confetti({ particleCount: 200, spread: 80, origin: { y: 0.7 } });
+            spawnHearts(30);
+            setTimeout(() => alert("¡Yo también te amo muchísimo! ❤️"), 500);
         }
 
-        window.onload = () => loadPhoto(1);
+        function spawnHearts(count) {
+            for(let i=0; i<count; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart text-2xl';
+                heart.innerText = ['❤️', '💖', '🌸', '✨', '🌹'][Math.floor(Math.random()*5)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 4000);
+            }
+        }
+
+        // --- Scroll Animations ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        window.onload = () => { loadPhoto(1); updateCounter(); };
     </script>
 </body>
 </html>
