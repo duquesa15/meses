@@ -3,70 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Flor ❤️</title>
+    <title>Para mi Hermosa Flor ❤️</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/framer-motion@11.11.11/dist/framer-motion.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #FAF9F6; color: #1A1A1A; scroll-behavior: smooth; }
+        :root { --gold: #8C7851; --cream: #FAF9F6; --dark: #1A1A1A; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: var(--dark); scroll-behavior: smooth; }
         .serif { font-family: 'Playfair Display', serif; }
+        .cursive { font-family: 'Dancing Script', cursive; }
+        .photo-frame { aspect-ratio: 4/5; width: 100%; object-fit: cover; border-radius: 1.5rem; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        @keyframes heart-float { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-100px) scale(1.5); opacity: 0; } }
+        .heart-particle { position: absolute; pointer-events: none; animation: heart-float 1s ease-out forwards; color: #ff4d4d; }
     </style>
 </head>
-<body class="overflow-x-hidden">
+<body class="overflow-x-hidden" onclick="createHeart(event)">
 
     <!-- Hero Section -->
-    <section class="h-screen flex flex-col items-center justify-center text-center px-6 relative">
+    <section class="min-h-screen flex flex-col items-center justify-center text-center px-6 relative bg-[#1A1A1A] text-white">
+        <div class="absolute inset-0 opacity-30 bg-[url('https://www.transparenttextures.com/patterns/paper.png')]"></div>
         <div class="z-10">
-            <span class="text-[10px] uppercase tracking-[0.6em] text-[#8C7851] block mb-6">Cinco Meses de Nosotros</span>
-            <h1 class="text-7xl md:text-9xl serif italic leading-none mb-4">Flor & Yo</h1>
-            <p class="text-sm font-mono tracking-[0.3em] opacity-40 mt-8 uppercase">Desde el 30.03.2025</p>
+            <p class="text-[10px] uppercase tracking-[0.8em] text-[#8C7851] mb-8 opacity-80">Cinco Meses de Puro Amor</p>
+            <h1 class="text-7xl md:text-9xl serif italic leading-none mb-6">Flor <span class="text-3xl md:text-5xl not-italic font-light">&</span> Yo</h1>
+            <p class="cursive text-3xl md:text-5xl text-[#8C7851] mt-4">Hermosa mi amor, mi vida...</p>
         </div>
-        <div class="absolute bottom-10 w-px h-20 bg-[#1A1A1A] opacity-20"></div>
-    </section>
-
-    <!-- Galería con Cargador Inteligente -->
-    <section class="py-24 bg-[#1A1A1A] text-white">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-4xl serif italic mb-12">Nuestros Momentos</h2>
-            <div class="relative aspect-[4/5] md:aspect-video rounded-3xl overflow-hidden shadow-2xl border border-white/10">
-                <img id="gallery-img" src="" class="w-full h-full object-cover transition-opacity duration-500 opacity-0">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                <div id="loading-tag" class="absolute top-4 right-4 text-[10px] font-mono opacity-30">Buscando foto...</div>
-                <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                    <p class="serif italic text-2xl">Nuestra Magia</p>
-                    <p id="photo-counter" class="text-xs opacity-50">1 / 30</p>
-                </div>
-            </div>
-            <div class="flex justify-center gap-6 mt-8">
-                <button onclick="changePhoto(-1)" class="p-4 rounded-full bg-white/10 hover:bg-white/20 transition">←</button>
-                <button onclick="changePhoto(1)" class="p-4 rounded-full bg-white/10 hover:bg-white/20 transition">→</button>
-            </div>
+        <div class="absolute bottom-10 animate-bounce opacity-30">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
         </div>
     </section>
 
-    <!-- Video y Carta -->
-    <section class="py-24 px-6 max-w-3xl mx-auto text-center">
-        <h2 class="text-4xl serif italic mb-12">Un Regalo para Vos</h2>
-        <div class="aspect-[9/16] max-w-[300px] mx-auto rounded-[3rem] overflow-hidden shadow-2xl border-[10px] border-white bg-black mb-16">
-            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/tbB49CwxorM" frameborder="0" allowfullscreen></iframe>
+    <!-- Línea de Tiempo -->
+    <section class="py-24 px-6 max-w-4xl mx-auto">
+        <div class="text-center mb-20">
+            <h2 class="text-4xl serif italic mb-4">Nuestra Historia</h2>
+            <div class="w-12 h-px bg-[#8C7851] mx-auto opacity-50"></div>
         </div>
         
-        <div class="text-left space-y-10 text-xl leading-relaxed font-light">
-            <h3 class="text-5xl serif italic">Feliz año nuevo, amor ❤️</h3>
-            <p>Desde el 30 de marzo vivimos de todo un poco: momentos re lindos, discusiones, arreglos, aprendizajes… y aun así seguimos acá, eligiéndonos.</p>
-            <div class="p-10 bg-[#1A1A1A] text-white rounded-[3rem] serif italic text-2xl shadow-xl">
-                "No somos perfectos y a veces nos cuesta, pero sé que nos amamos y que cuando hay amor siempre hay ganas de intentar y de mejorar."
+        <div class="space-y-16 relative">
+            <div class="absolute left-1/2 top-0 bottom-0 w-px bg-[#8C7851] opacity-20 -translate-x-1/2"></div>
+            
+            <!-- Hito 1 -->
+            <div class="relative flex items-center justify-between md:justify-center gap-8">
+                <div class="w-1/2 hidden md:block text-right pr-12">
+                    <p class="text-xs font-mono text-[#8C7851]">30 DE MARZO, 2025</p>
+                    <h3 class="serif italic text-2xl">Donde todo empezó</h3>
+                </div>
+                <div class="w-4 h-4 rounded-full bg-[#8C7851] z-10 shadow-[0_0_15px_rgba(140,120,81,0.5)]"></div>
+                <div class="flex-1 md:w-1/2 pl-4 md:pl-12">
+                    <p class="md:hidden text-[10px] font-mono text-[#8C7851]">30 DE MARZO</p>
+                    <p class="text-sm font-light opacity-70">El primer "Hola". Una charla que parecía casual pero que iba a cambiarlo todo para siempre.</p>
+                </div>
             </div>
-            <p>Gracias por todo lo que sos. Te amo y espero que este año nos encuentre más unidos y felices juntos.</p>
-            <div class="text-center pt-10">
-                <span class="text-6xl">❤️</span>
-                <p class="serif italic text-4xl mt-4">Por siempre, Flor.</p>
+
+            <!-- Hito 2 -->
+            <div class="relative flex items-center justify-between md:justify-center gap-8">
+                <div class="flex-1 md:w-1/2 text-right pr-4 md:pr-12">
+                    <p class="md:hidden text-[10px] font-mono text-[#8C7851]">20 DE SEPTIEMBRE</p>
+                    <p class="text-sm font-light opacity-70">El día que nos pusimos de novios. Cuando decidimos que queríamos caminar juntos de la mano.</p>
+                </div>
+                <div class="w-4 h-4 rounded-full bg-[#8C7851] z-10 shadow-[0_0_15px_rgba(140,120,81,0.5)]"></div>
+                <div class="w-1/2 hidden md:block pl-12">
+                    <p class="text-xs font-mono text-[#8C7851]">20 DE SEPTIEMBRE, 2025</p>
+                    <h3 class="serif italic text-2xl">Nuestro "Sí" oficial</h3>
+                </div>
+            </div>
+
+            <!-- Hito 3 -->
+            <div class="relative flex items-center justify-between md:justify-center gap-8">
+                <div class="w-1/2 hidden md:block text-right pr-12">
+                    <p class="text-xs font-mono text-[#8C7851]">20 DE FEBRERO, 2026</p>
+                    <h3 class="serif italic text-2xl">Hoy</h3>
+                </div>
+                <div class="w-4 h-4 rounded-full bg-[#8C7851] z-10 shadow-[0_0_15px_rgba(140,120,81,0.5)]"></div>
+                <div class="flex-1 md:w-1/2 pl-4 md:pl-12">
+                    <p class="md:hidden text-[10px] font-mono text-[#8C7851]">HOY</p>
+                    <p class="text-sm font-light opacity-70">5 meses de novios. Seguimos acá, más unidos que nunca y con ganas de todo.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Pregunta Divertida -->
-    <section class="py-24 bg-[#F5F2ED] text-center">
+    <!-- Galería con Tamaño Fijo -->
+    <section class="py-24 bg-[#1A1A1A] text-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-4xl serif italic mb-4">Recuerdos</h2>
+            <p class="text-xs tracking-widest opacity-40 mb-12 uppercase">Nuestros momentos favoritos</p>
+            
+            <div class="relative max-w-md mx-auto group">
+                <div class="photo-frame overflow-hidden shadow-2xl border border-white/10 bg-neutral-900">
+                    <img id="gallery-img" src="" class="w-full h-full object-cover transition-opacity duration-500 opacity-0">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-8 left-8 right-8 text-left">
+                        <p class="serif italic text-2xl">Nuestra Magia</p>
+                        <p id="photo-counter" class="text-[10px] font-mono opacity-40 mt-2">1 / 30</p>
+                    </div>
+                </div>
+                
+                <!-- Controles -->
+                <button onclick="changePhoto(-1)" class="absolute -left-6 top-1/2 -translate-y-1/2 w-12 h-12 glass rounded-full flex items-center justify-center hover:bg-white/10 transition">←</button>
+                <button onclick="changePhoto(1)" class="absolute -right-6 top-1/2 -translate-y-1/2 w-12 h-12 glass rounded-full flex items-center justify-center hover:bg-white/10 transition">→</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Frase Destacada -->
+    <section class="py-32 px-6 text-center bg-[#F5F2ED]">
+        <div class="max-w-2xl mx-auto">
+            <span class="text-4xl">🌴</span>
+            <h2 class="serif italic text-3xl md:text-5xl leading-tight mt-8">
+                "Te amo de aquí hasta la palmera y después al cielo, ida y vuelta."
+            </h2>
+            <p class="cursive text-2xl text-[#8C7851] mt-6">— Tu novio</p>
+        </div>
+    </section>
+
+    <!-- Video -->
+    <section class="py-24 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl serif italic mb-12">Un Regalo Visual</h2>
+            <div class="aspect-[9/16] max-w-[320px] mx-auto rounded-[2.5rem] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.2)] border-[12px] border-white bg-black">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/tbB49CwxorM" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- La Carta -->
+    <section class="py-32 px-6 max-w-2xl mx-auto">
+        <div class="space-y-8 text-lg leading-relaxed font-light">
+            <h3 class="text-5xl serif italic mb-12">Felices 5 meses, mi amor ❤️</h3>
+            <p>Desde que nos comenzamos a hablar el 30 de marzo vivimos de todo un poco: momentos re lindos, discusiones, arreglos, aprendizajes… y aun así seguimos acá, eligiéndonos cada día.</p>
+            <p>No somos perfectos y a veces nos cuesta, pero sé que nos amamos y que cuando hay amor siempre hay ganas de intentar y de mejorar.</p>
+            <div class="p-10 bg-[#1A1A1A] text-white rounded-[3rem] serif italic text-2xl shadow-xl relative overflow-hidden">
+                "Ojalá este año podamos acomodar esas cositas que nos traban, con más paciencia, más charla y menos enojo."
+                <div class="absolute -bottom-4 -right-4 text-6xl opacity-10">❤️</div>
+            </div>
+            <p>Gracias por todo lo que sos y por lo que compartimos. Te amo y espero que estos 5 meses sean solo el comienzo de muchísimos más.</p>
+            <div class="text-center pt-16">
+                <p class="cursive text-4xl text-[#8C7851]">Por siempre juntos,</p>
+                <p class="serif italic text-5xl mt-2">Tu amor.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Medidor de Amor Interactivo -->
+    <section class="py-24 bg-[#F5F2ED] text-center px-6">
+        <h2 class="serif italic text-3xl mb-12">¿Cuánto te amo hoy?</h2>
+        <div class="max-w-sm mx-auto space-y-8">
+            <div class="h-2 bg-white rounded-full overflow-hidden">
+                <div id="love-bar" class="h-full bg-[#8C7851] transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <button onclick="boostLove()" class="px-10 py-4 bg-[#1A1A1A] text-white rounded-full font-bold shadow-xl active:scale-95 transition">Subir Amor ❤️</button>
+            <p id="love-status" class="text-xs font-mono opacity-40 uppercase tracking-widest">Toca para aumentar</p>
+        </div>
+    </section>
+
+    <!-- Pregunta Final -->
+    <section class="py-24 text-center px-6">
         <h2 class="text-3xl serif italic mb-12">¿Me amás un poquito?</h2>
         <div class="flex justify-center items-center gap-8 h-32 relative max-w-xs mx-auto">
             <button onclick="celebrate()" class="px-10 py-4 bg-[#1A1A1A] text-white rounded-full font-bold shadow-xl z-20">SÍ</button>
@@ -74,50 +169,34 @@
         </div>
     </section>
 
-    <footer class="py-12 text-center opacity-30 text-[10px] tracking-[0.5em] uppercase">
-        5 Meses • Infinitos Recuerdos
+    <footer class="py-20 text-center opacity-20 text-[10px] tracking-[1em] uppercase">
+        20.09.2025 • 20.02.2026
     </footer>
 
     <script>
         let current = 1;
         const total = 30;
         const extensions = ['jpeg', 'jpg', 'png', 'JPEG', 'JPG', 'PNG'];
+        let loveLevel = 0;
 
         function loadPhoto(num) {
             const img = document.getElementById('gallery-img');
-            const loadingTag = document.getElementById('loading-tag');
             let extIndex = 0;
 
-            function tryNextExtension() {
+            function tryNext() {
                 if (extIndex >= extensions.length) {
-                    // Si nada funciona, poner placeholder
-                    img.src = `https://picsum.photos/seed/love${num}/1200/800`;
+                    img.src = `https://picsum.photos/seed/love${num}/800/1000`;
                     img.style.opacity = 1;
-                    loadingTag.innerText = "Usando ejemplo";
                     return;
                 }
-
                 const testUrl = `img/foto${num}.${extensions[extIndex]}`;
                 const tester = new Image();
-                
-                tester.onload = function() {
-                    img.src = testUrl;
-                    img.style.opacity = 1;
-                    loadingTag.innerText = `Formato: .${extensions[extIndex]}`;
-                    document.getElementById('photo-counter').innerText = `${num} / ${total}`;
-                };
-
-                tester.onerror = function() {
-                    extIndex++;
-                    tryNextExtension();
-                };
-
+                tester.onload = () => { img.src = testUrl; img.style.opacity = 1; document.getElementById('photo-counter').innerText = `${num} / ${total}`; };
+                tester.onerror = () => { extIndex++; tryNext(); };
                 tester.src = testUrl;
             }
-
             img.style.opacity = 0;
-            loadingTag.innerText = "Buscando...";
-            setTimeout(tryNextExtension, 200);
+            setTimeout(tryNext, 200);
         }
 
         function changePhoto(dir) {
@@ -125,6 +204,25 @@
             if (current > total) current = 1;
             if (current < 1) current = total;
             loadPhoto(current);
+        }
+
+        function boostLove() {
+            loveLevel = Math.min(loveLevel + 20, 100);
+            document.getElementById('love-bar').style.width = loveLevel + '%';
+            if (loveLevel === 100) {
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 } });
+                document.getElementById('love-status').innerText = "¡AMOR INFINITO ALCANZADO!";
+            }
+        }
+
+        function createHeart(e) {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.className = 'heart-particle';
+            heart.style.left = e.pageX + 'px';
+            heart.style.top = e.pageY + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1000);
         }
 
         function moveNo() {
@@ -136,11 +234,11 @@
 
         function celebrate() {
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 } });
-            alert("¡Yo también te amo muchísimo! ❤️");
+            alert("¡Yo también te amo de aquí hasta la palmera mi vida! ❤️");
         }
 
-        // Cargar la primera foto al iniciar
         window.onload = () => loadPhoto(1);
     </script>
 </body>
 </html>
+
