@@ -3,177 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Flor - 5 Meses Juntos ❤️</title>
-    
-    <!-- Librerías desde CDN (No necesitan instalación) -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Para Flor ❤️</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/framer-motion@11.0.8/dist/framer-motion.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FAF9F6;
-            margin: 0;
-            overflow-x: hidden;
-        }
-        .font-serif { font-family: 'Playfair Display', serif; }
-        .scroll-smooth { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: #FAF9F6; color: #1A1A1A; scroll-behavior: smooth; }
+        .serif { font-family: 'Playfair Display', serif; }
     </style>
 </head>
-<body class="scroll-smooth">
-    <div id="root"></div>
+<body class="overflow-x-hidden">
 
-    <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
-        const { motion, AnimatePresence } = Motion;
+    <!-- Hero Section -->
+    <section class="h-screen flex flex-col items-center justify-center text-center px-6 relative">
+        <div class="z-10">
+            <span class="text-[10px] uppercase tracking-[0.6em] text-[#8C7851] block mb-6">Cinco Meses de Nosotros</span>
+            <h1 class="text-7xl md:text-9xl serif italic leading-none mb-4">Flor & Yo</h1>
+            <p class="text-sm font-mono tracking-[0.3em] opacity-40 mt-8 uppercase">Desde el 30.03.2025</p>
+        </div>
+        <div class="absolute bottom-10 w-px h-20 bg-[#1A1A1A] opacity-20"></div>
+    </section>
 
-        // Iconos de Lucide
-        const Icon = ({ name, size = 24, className = "", fill = "none" }) => {
-            const iconRef = useRef(null);
-            useEffect(() => {
-                if (window.lucide) {
-                    window.lucide.createIcons();
-                }
-            }, [name]);
-            return <i data-lucide={name} className={className} style={{ width: size, height: size, stroke: 'currentColor', fill: fill }}></i>;
-        };
-
-        const FloatingHearts = () => {
-            return (
-                <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-                    {[...Array(15)].map((_, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ y: '110vh', x: `${Math.random() * 100}vw`, opacity: 0 }}
-                            animate={{ 
-                                y: '-10vh', 
-                                opacity: [0, 0.4, 0],
-                                rotate: [0, 45, -45, 0],
-                                scale: [0.5, 1, 0.5]
-                            }}
-                            transition={{ 
-                                duration: 15 + Math.random() * 20, 
-                                repeat: Infinity, 
-                                delay: Math.random() * 10,
-                                ease: "linear"
-                            }}
-                            className="absolute text-[#D9A0A0]/20"
-                        >
-                            <Icon name="heart" size={20 + Math.random() * 30} fill="currentColor" />
-                        </motion.div>
-                    ))}
+    <!-- Galería con Cargador Inteligente -->
+    <section class="py-24 bg-[#1A1A1A] text-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-4xl serif italic mb-12">Nuestros Momentos</h2>
+            <div class="relative aspect-[4/5] md:aspect-video rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+                <img id="gallery-img" src="" class="w-full h-full object-cover transition-opacity duration-500 opacity-0">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div id="loading-tag" class="absolute top-4 right-4 text-[10px] font-mono opacity-30">Buscando foto...</div>
+                <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                    <p class="serif italic text-2xl">Nuestra Magia</p>
+                    <p id="photo-counter" class="text-xs opacity-50">1 / 30</p>
                 </div>
-            );
-        };
-
-        const SectionTitle = ({ children, subtitle }) => (
-            <div className="text-center mb-16 px-4">
-                <span className="text-[10px] uppercase tracking-[0.4em] text-[#8C7851] font-mono block mb-3">{subtitle}</span>
-                <h2 className="text-4xl md:text-6xl font-serif italic text-[#1A1A1A]">{children}</h2>
-                <div className="w-16 h-px bg-[#8C7851] mx-auto mt-8 opacity-30" />
             </div>
-        );
+            <div class="flex justify-center gap-6 mt-8">
+                <button onclick="changePhoto(-1)" class="p-4 rounded-full bg-white/10 hover:bg-white/20 transition">←</button>
+                <button onclick="changePhoto(1)" class="p-4 rounded-full bg-white/10 hover:bg-white/20 transition">→</button>
+            </div>
+        </div>
+    </section>
 
-        const App = () => {
-            const [currentPhoto, setCurrentPhoto] = useState(1);
-            const [loveLevel, setLoveLevel] = useState(0);
-            const [showSurprise, setShowSurprise] = useState(false);
-            const [noButtonPos, setNoButtonPos] = useState({ x: 0, y: 0 });
+    <!-- Video y Carta -->
+    <section class="py-24 px-6 max-w-3xl mx-auto text-center">
+        <h2 class="text-4xl serif italic mb-12">Un Regalo para Vos</h2>
+        <div class="aspect-[9/16] max-w-[300px] mx-auto rounded-[3rem] overflow-hidden shadow-2xl border-[10px] border-white bg-black mb-16">
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/tbB49CwxorM" frameborder="0" allowfullscreen></iframe>
+        </div>
+        
+        <div class="text-left space-y-10 text-xl leading-relaxed font-light">
+            <h3 class="text-5xl serif italic">Feliz año nuevo, amor ❤️</h3>
+            <p>Desde el 30 de marzo vivimos de todo un poco: momentos re lindos, discusiones, arreglos, aprendizajes… y aun así seguimos acá, eligiéndonos.</p>
+            <div class="p-10 bg-[#1A1A1A] text-white rounded-[3rem] serif italic text-2xl shadow-xl">
+                "No somos perfectos y a veces nos cuesta, pero sé que nos amamos y que cuando hay amor siempre hay ganas de intentar y de mejorar."
+            </div>
+            <p>Gracias por todo lo que sos. Te amo y espero que este año nos encuentre más unidos y felices juntos.</p>
+            <div class="text-center pt-10">
+                <span class="text-6xl">❤️</span>
+                <p class="serif italic text-4xl mt-4">Por siempre, Flor.</p>
+            </div>
+        </div>
+    </section>
 
-            const handleConfetti = () => {
-                confetti({ particleCount: 200, spread: 90, origin: { y: 0.7 }, colors: ['#8C7851', '#D9A0A0'] });
-                setShowSurprise(true);
-            };
+    <!-- Pregunta Divertida -->
+    <section class="py-24 bg-[#F5F2ED] text-center">
+        <h2 class="text-3xl serif italic mb-12">¿Me amás un poquito?</h2>
+        <div class="flex justify-center items-center gap-8 h-32 relative max-w-xs mx-auto">
+            <button onclick="celebrate()" class="px-10 py-4 bg-[#1A1A1A] text-white rounded-full font-bold shadow-xl z-20">SÍ</button>
+            <button id="no-btn" onmouseover="moveNo()" onclick="moveNo()" class="px-10 py-4 border-2 border-[#1A1A1A] rounded-full font-bold transition-all duration-200 z-10">NO</button>
+        </div>
+    </section>
 
-            const moveNoButton = () => {
-                setNoButtonPos({ x: Math.random() * 200 - 100, y: Math.random() * 100 - 50 });
-            };
+    <footer class="py-12 text-center opacity-30 text-[10px] tracking-[0.5em] uppercase">
+        5 Meses • Infinitos Recuerdos
+    </footer>
 
-            return (
-                <div className="relative">
-                    <FloatingHearts />
+    <script>
+        let current = 1;
+        const total = 30;
+        const extensions = ['jpeg', 'jpg', 'png', 'JPEG', 'JPG', 'PNG'];
 
-                    {/* HERO */}
-                    <section className="h-screen flex flex-col items-center justify-center text-center px-6">
-                        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5 }}>
-                            <span className="text-[11px] uppercase tracking-[0.6em] text-[#8C7851] block mb-6">Cinco Meses Juntos</span>
-                            <h1 className="text-7xl md:text-9xl font-serif italic leading-tight mb-4">Flor & Yo</h1>
-                            <p className="text-sm font-mono tracking-[0.3em] opacity-40">EST. 30.03.2025</p>
-                        </motion.div>
-                    </section>
+        function loadPhoto(num) {
+            const img = document.getElementById('gallery-img');
+            const loadingTag = document.getElementById('loading-tag');
+            let extIndex = 0;
 
-                    {/* GALERIA */}
-                    <section className="py-24 bg-[#1A1A1A] text-white text-center px-6">
-                        <SectionTitle subtitle="Recuerdos">Nuestra Magia</SectionTitle>
-                        <div className="max-w-4xl mx-auto relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-white/10">
-                            <img 
-                                src={`https://picsum.photos/seed/flor${currentPhoto}/1200/800`} 
-                                className="w-full h-full object-cover"
-                                alt="Recuerdo"
-                            />
-                            <div className="absolute inset-0 flex justify-between items-center px-4">
-                                <button onClick={() => setCurrentPhoto(p => p > 1 ? p - 1 : 30)} className="bg-white/10 p-3 rounded-full backdrop-blur-md">←</button>
-                                <button onClick={() => setCurrentPhoto(p => p < 30 ? p + 1 : 1)} className="bg-white/10 p-3 rounded-full backdrop-blur-md">→</button>
-                            </div>
-                        </div>
-                        <p className="mt-4 opacity-50 font-mono text-xs">Foto {currentPhoto} de 30</p>
-                    </section>
+            function tryNextExtension() {
+                if (extIndex >= extensions.length) {
+                    // Si nada funciona, poner placeholder
+                    img.src = `https://picsum.photos/seed/love${num}/1200/800`;
+                    img.style.opacity = 1;
+                    loadingTag.innerText = "Usando ejemplo";
+                    return;
+                }
 
-                    {/* CARTA */}
-                    <section className="py-32 px-6 max-w-3xl mx-auto space-y-12 text-lg font-light leading-relaxed">
-                        <h2 className="text-5xl font-serif italic">Feliz año nuevo, amor ❤️</h2>
-                        <p>Quería escribirte tranqui y decirte lo que siento. Desde el 30 de marzo vivimos de todo un poco: momentos re lindos, discusiones, arreglos, aprendizajes… y aun así seguimos acá, eligiéndonos.</p>
-                        <div className="p-10 bg-[#1A1A1A] text-white rounded-[3rem] font-serif italic text-2xl shadow-xl">
-                            "No somos perfectos y a veces nos cuesta, pero sé que nos amamos y que cuando hay amor siempre hay ganas de intentar y de mejorar."
-                        </div>
-                        <p>Gracias por todo lo que sos. Te amo y espero que este año nos encuentre más unidos, más tranquilos y más felices juntos.</p>
-                        <div className="text-center pt-10">
-                            <Icon name="heart" size={64} className="mx-auto text-[#1A1A1A]" fill="#1A1A1A" />
-                            <p className="font-serif italic text-4xl mt-4">Por siempre, Flor.</p>
-                        </div>
-                    </section>
+                const testUrl = `img/foto${num}.${extensions[extIndex]}`;
+                const tester = new Image();
+                
+                tester.onload = function() {
+                    img.src = testUrl;
+                    img.style.opacity = 1;
+                    loadingTag.innerText = `Formato: .${extensions[extIndex]}`;
+                    document.getElementById('photo-counter').innerText = `${num} / ${total}`;
+                };
 
-                    {/* VIDEO */}
-                    <section className="py-24 bg-[#F5F2ED] text-center px-6">
-                        <SectionTitle subtitle="Para vos">Un Regalo Visual</SectionTitle>
-                        <div className="aspect-[9/16] max-w-[300px] mx-auto rounded-[3rem] overflow-hidden shadow-2xl border-[10px] border-white bg-black">
-                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/tbB49CwxorM" frameBorder="0" allowFullScreen></iframe>
-                        </div>
-                    </section>
+                tester.onerror = function() {
+                    extIndex++;
+                    tryNextExtension();
+                };
 
-                    {/* PREGUNTA */}
-                    <section className="py-32 text-center px-6">
-                        <SectionTitle subtitle="Pregunta Final">¿Me amás un poquito?</SectionTitle>
-                        <div className="flex justify-center items-center gap-8 h-32 relative max-w-xs mx-auto">
-                            <button 
-                                onClick={() => { confetti(); alert("¡Yo también te amo! ❤️"); }}
-                                className="px-10 py-4 bg-[#1A1A1A] text-white rounded-full font-medium shadow-xl z-20"
-                            >SÍ</button>
-                            <motion.button 
-                                animate={{ x: noButtonPos.x, y: noButtonPos.y }}
-                                onPointerEnter={moveNoButton}
-                                onClick={moveNoButton}
-                                className="px-10 py-4 border-2 border-[#1A1A1A] text-[#1A1A1A] rounded-full font-medium z-10"
-                            >NO</motion.button>
-                        </div>
-                    </section>
+                tester.src = testUrl;
+            }
 
-                    <footer className="py-20 text-center opacity-30 text-[10px] tracking-[0.5em] uppercase">
-                        5 Meses • 150 Días • Infinitos Recuerdos
-                    </footer>
-                </div>
-            );
-        };
+            img.style.opacity = 0;
+            loadingTag.innerText = "Buscando...";
+            setTimeout(tryNextExtension, 200);
+        }
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+        function changePhoto(dir) {
+            current += dir;
+            if (current > total) current = 1;
+            if (current < 1) current = total;
+            loadPhoto(current);
+        }
+
+        function moveNo() {
+            const btn = document.getElementById('no-btn');
+            const x = Math.random() * 200 - 100;
+            const y = Math.random() * 150 - 75;
+            btn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        function celebrate() {
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 } });
+            alert("¡Yo también te amo muchísimo! ❤️");
+        }
+
+        // Cargar la primera foto al iniciar
+        window.onload = () => loadPhoto(1);
     </script>
 </body>
 </html>
